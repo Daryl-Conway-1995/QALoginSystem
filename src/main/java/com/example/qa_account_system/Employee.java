@@ -10,15 +10,54 @@ import javax.persistence.Id;
 public class Employee {
 
     private @Id @GeneratedValue Long id;
-    private String name;
-    private int age;
-    private int years;
+    private String firstName;
+    private String lastName;
+    private String userName;
 
     private Employee() {}
 
-    public Employee(String name, int age, int years) {
-        this.name = name;
-        this.age = age;
-        this.years = years;
+    public Employee(String firstName, String lastName,String username) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = username;
+    }
+
+
+    //region get methods
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getfName() {
+        return firstName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+    //endregion
+
+    //region set methods
+    public void setLastName(String age) {
+        this.lastName = lastName;
+    }
+
+    public void setfName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    //endregion
+
+
+    @Override
+    public String toString() {
+        return ("id:"+getId() +" name:"+ getfName()+" "+getLastName()+" username:"+getUserName());
     }
 }

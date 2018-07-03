@@ -67,9 +67,9 @@ var Employee = React.createClass({
         if (this.state.display==false) return null;
         else return (
             <tr>
-                <td>{this.props.employee.name}</td>
-                <td>{this.props.employee.age}</td>
-                <td>{this.props.employee.years}</td>
+                <td>{this.props.employee.name} </td>
+                <td>{this.props.employee.age} </td>
+                <td>{this.props.employee.years} </td>
                 <td>
                     <button className="btn btn-info" onClick={this.handleDelete}>Delete</button>
                 </td>
@@ -86,12 +86,14 @@ var EmployeeTable = React.createClass({
         });
         return (
             <div className="container">
+                <br/>
+                <br/>
                 <table>
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Years</th>
+                        <th>Name </th>
+                        <th>Age </th>
+                        <th>Years </th>
                     </tr>
                     </thead>
                     <tbody>{rows}</tbody>
@@ -144,6 +146,8 @@ const InputUser = React.createClass({
         return (
             <div className="container">
                 <form>
+                    <br/>
+                    <br/>
                     <div className="form-group">
                         <label htmlFor="inputFName">First Name</label>
                         <input type="text" className="form-control" id="inputFName" placeholder="First name" onChange={this.nameChange} val={this.state.firstName}/>
