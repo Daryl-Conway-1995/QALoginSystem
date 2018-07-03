@@ -76,6 +76,7 @@ var App = React.createClass({
     },
 
     render() {
+        console.log(this.state.employees)
         return ( <EmployeeTable employees={this.state.employees}/> );
     }
 });
