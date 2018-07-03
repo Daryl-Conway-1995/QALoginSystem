@@ -80,4 +80,4 @@ var App = React.createClass({
     }
 });
 
-ReactDOM.render(<App />, document.getElementById('HOME') );
+ReactDOM.render(<App />, document.getElementById('MID') );
