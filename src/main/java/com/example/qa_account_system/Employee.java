@@ -11,22 +11,23 @@ public class Employee {
 
     private @Id @GeneratedValue Long id;
     private String firstName;
-    private String lastName;
     private String userName;
+    private String lastName;
 
     private Employee() {}
 
-    public Employee(String firstName, String lastName,String username) {
+    public Employee(String firstName, String lastName, String username) {
+
         this.firstName = firstName;
-        this.lastName = lastName;
         this.userName = username;
+        this.lastName = lastName;
     }
 
 
     //region get methods
-    public String getLastName() {
-        return lastName;
-    }
+//    public String getLastName() {
+//        return lastName;
+//    }
 
     public Long getId() {
         return id;
@@ -42,9 +43,9 @@ public class Employee {
     //endregion
 
     //region set methods
-    public void setLastName(String age) {
-        this.lastName = lastName;
-    }
+//    public void setLastName(String age) {
+//        this.lastName = lastName;
+//    }
 
     public void setfName(String firstName) {
         this.firstName = firstName;
@@ -58,6 +59,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return ("id:"+getId() +" name:"+ getfName()+" "+getLastName()+" username:"+getUserName());
+        return ("id:"+getId() +" name:"+ getfName()+" "+"getLastName()"+" username:"+getUserName());
     }
 }
