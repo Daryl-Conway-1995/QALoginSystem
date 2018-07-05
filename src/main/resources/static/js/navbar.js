@@ -3,7 +3,6 @@ var NavigationBar = React.createClass({
         return {display: true };
     },
     AddAccounts() {
-
         ReactDOM.render(
             <InputUser/>, document.getElementById("body")
         );
@@ -46,6 +45,151 @@ var NavigationBar = React.createClass({
     }
 });
 
+var EditModal = React.createClass({
+    getInitialState: function() {
+        return {
+            firstName: this.props.employee.firstName,
+            lastName: this.props.employee.lastName,
+            userName: this.props.employee.userName
+        }
+    },
+
+    renderUpdates: function(){
+        ReactDOM.render(
+            <InputUser/>, document.getElementById("body")
+        )
+        ReactDOM.render(
+            <UserDetails/>, document.getElementById("body")
+        )
+
+    },
+
+    componentWillMount: function() {
+        const id = "modal-" + this.props.employee.id;
+        this.setState({id: id, dataTarget : "#" + id});
+
+    },
+    render: function() {
+        return (
+            <div>
+                <button type="button" className="btn btn-primary" data-toggle="modal" data-target={this.state.dataTarget} onClick={this.updateProps}>
+                    Edit
+                </button>
+
+                <div className="modal fade" id={this.state.id} tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                            </div>
+                            <div className="modal-body">
+                                <EditForm employee={this.props.employee} onClick={this.props.onClick}/>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={this.renderUpdates} >Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+});
+
+var EditForm = React.createClass({
+
+    getInitialState: function() {
+        return {
+            firstName: this.props.employee.firstName,
+            lastName: this.props.employee.lastName,
+            userName: this.props.employee.userName
+        }
+    },
+
+    fNameChange: function(e) {
+        this.setState({
+            firstName: e.target.value
+        })
+    },
+    lNameChange: function(e) {
+        this.setState({
+            lastName: e.target.value
+        })
+    },
+    userNameChange: function(e) {
+        this.setState({
+            userName: e.target.value
+        })
+    },
+
+
+    submit: function (e){
+        var self
+
+        e.preventDefault();
+        e.persist();
+        self = this
+
+
+        var data = {
+            "firstName": this.state.firstName,
+            "lastName": this.state.lastName,
+            "userName": this.state.userName
+        }
+
+        if(typeof this.props.employee.id !== "undefined") data.id = this.props.employee.id;
+
+        var jsonData = JSON.stringify(data);
+
+        // Submit form via jQuery/AJAX
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "method": "POST",
+            "url": "app/addUser",
+            "headers": {
+                "content-type": "application/json",
+                "cache-control": "no-cache",
+                "postman-token": "7583589c-5a8a-9fa1-a6c1-cce43c23293d"
+            },
+            "processData": false,
+            "data": jsonData
+        }
+
+        $.ajax(settings)
+            .done(function(data) {
+            })
+            .fail(function(jqXhr) {
+                console.log("data : " + data );
+                console.log('failed to register');
+            });
+
+    },
+
+    render: function() {
+        return (
+
+            <div className="container">
+                <form onSubmit={this.submit}>
+                    <div className="form-group">
+                        <label for="exampleInputPassword1">First Name</label>
+                        <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="firstname" placeholder="Enter First Name" onChange={this.fNameChange} val={this.state.firstName} defaultValue={this.props.employee.firstName}/>
+                    </div>
+                    <div className="form-group">
+                        <label for="exampleInputPassword1">lastName</label>
+                        <input type="text" className="form-control" id="exampleInputPassword1" placeholder="lastName" onChange={this.lNameChange} val={this.state.lastName} defaultValue={this.props.employee.lastName}/>
+                    </div>
+                    <div className="form-group">
+                        <label for="exampleInputPassword1">Username</label>
+                        <input type="text" className="form-control" id="exampleInputPassword1" placeholder="username"  onChange={this.userNameChange} val={this.state.userName} defaultValue={this.props.employee.userName}/>
+                    </div>
+                    <button type="submit" className="btn btn-primary"  >Edit User</button>
+                </form>
+            </div>
+        );
+    }
+});
+
 var Employee = React.createClass({
     getInitialState: function() {
         return {display: true };
@@ -71,6 +215,12 @@ var Employee = React.createClass({
             }
         });
     },
+    handleEdit: function(firstName , lastName, username) {
+        this.props.employee.lastName = lastName;
+        this.props.employee.firstName = firstName;
+        this.props.employee.userName = username;
+        this.forceUpdate()
+    },
     render: function() {
         if (this.state.delete) return null;
         else return (
@@ -81,6 +231,7 @@ var Employee = React.createClass({
                 <td>
                     <button className="btn btn-info" onClick={this.handleDelete}>Delete</button>
                 </td>
+                <td><EditModal employee={this.props.employee} onClick={this.handleEdit}/></td>
             </tr>
         );
     }
@@ -102,6 +253,8 @@ const EmployeeTable = React.createClass({
                         <th>First Name </th>
                         <th>Last Name </th>
                         <th>userName </th>
+                        <th>Delete</th>
+                        <th>Edit</th>
                     </tr>
                     </thead>
                     <tbody>{rows}</tbody>
@@ -138,13 +291,13 @@ var UserDetails = React.createClass({
             this.render();
         }
     },
-
     render() {
         console.log(this.state.employees);
-        return ( <EmployeeTable employees={this.state.employees}/> );
+        return (
+              <EmployeeTable employees={this.state.employees}/>
+        );
     }
 });
-
 
 const Dashboard = React.createClass({
     render: function () {
