@@ -1,6 +1,6 @@
-package com.example.qa_account_system.database_files;
+package com.example.qa_account_system;
 
-import com.example.qa_account_system.database_files.Employee;
+import com.example.qa_account_system.Employee;
 import org.springframework.data.repository.CrudRepository;
 
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {}

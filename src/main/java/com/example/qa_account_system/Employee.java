@@ -1,4 +1,4 @@
-package com.example.qa_account_system.database_files;
+package com.example.qa_account_system;
 
 import lombok.Data;
 import javax.persistence.Entity;
