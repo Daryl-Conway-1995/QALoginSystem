@@ -1,4 +1,4 @@
-package com.example.qa_account_system;
+package com.example.qa_account_system.application_files;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
